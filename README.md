@@ -23,7 +23,7 @@ Matches must be done in JSON formatting, which [matches.json](./matches.json) ha
 ```
 The names provided in each match will be the names displayed for each alliance color in the current score, and also in the final score reveal.
 
-Resetting the timer after a match (with matches data uploaded) has finished will result in the next match being brought up. This process will continue until there are no matches left, in which case no more matches will be played.
+Resetting the timer after a match has finished (with matches data uploaded) will result in the next match being brought up. This process will continue until there are no matches left, in which case no more matches will be played.
 
 ---
 
@@ -33,7 +33,7 @@ Once a match has finished, (when the timer has counted down to zero), clicking t
 
 ---
 
-Scoring uses the 1-8 keys on the keyboard, each pair containing an increment and decrement for points and penalties. So clicking 1 will give 1 point to red while clicking 2 will take the point back off.
+Scoring uses the 1-8 keys on the keyboard, each pair containing an increment and decrement for points and penalties. So clicking 1 will give a point to red while clicking 2 will take the point back off.
 
 The way that we have used the scoring feature is with [micro:bit](https://microbit.org/) controllers acting as bluetooth keyboard, and their buttons acting as the respective keys, which makes scoring with multiple much simpler. 
 
