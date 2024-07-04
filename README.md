@@ -2,6 +2,8 @@
 
 This is a Timer designed for FRC matches (mainly for summer camp use), but can be extended for anything needing a timer and points system.
 
+Use the web version [here](https://netlockj.github.io/frc-timer/).
+
 Use the buttons below the timer circle to start/stop the timer, reset the timer, and upload matches.
 
 <img src="./images/example.png">
