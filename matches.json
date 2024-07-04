@@ -1,0 +1,19 @@
+{
+    "use": false,
+    "m1":{
+       "red":"Alliance 1",
+       "blue":"Alliance 2"
+    },
+    "m2":{
+       "red":"Alliance 3",
+       "blue":"Alliance 4"
+    },
+    "m3":{
+       "red":"Alliance 5",
+       "blue":"Alliance 6"
+    },
+    "m4":{
+       "red":"Alliance 7",
+       "blue":"Alliance 8"
+    }
+}

@@ -1,0 +1,245 @@
+body {
+  overflow: hidden;
+}
+
+div,
+span {
+  user-select: none;
+  font-family: monospace;
+}
+
+.base-timer {
+  position: absolute;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+#timer-circle {
+  transition: 1.1s linear;
+  fill: none;
+  fill-rule: nonzero;
+  stroke-width: 15px;
+
+  transform: scaleX(-1) rotate(270deg);
+  transform-origin: center;
+}
+
+@keyframes warning {
+  0% {
+    fill: white;
+  }
+  50% {
+    fill: red;
+  }
+  90% {
+    fill: white;
+  }
+}
+
+.timer-end {
+  animation: warning 1s infinite;
+}
+
+#timer-display {
+  user-select: none;
+}
+
+.timer-buttons button {
+  width: 50px;
+  height: 50px;
+  margin: 3px;
+  background-color: #3b3a3a;
+  background-repeat: no-repeat;
+  background-size: 100%;
+  border: none;
+  transition: ease-in-out 0.2s;
+  border-radius: 15px;
+}
+
+.timer-buttons button:hover {
+  scale: 1.1;
+  background-color: #4e4e4e;
+}
+
+.scores {
+  width: 400px;
+  height: 215px;
+  position: absolute;
+  margin: 0px;
+  padding: 0px;
+  font-weight: 600;
+
+  /* Center text */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-content: center;
+
+  font-size: 150px;
+  color: white;
+  border-radius: 10px;
+  transform: translateY(calc(50vh - 50%));
+  transition: 2s ease-in-out;
+}
+
+.scores span {
+  font-size: 30px;
+  margin: 5px;
+}
+
+#red-score {
+  background: linear-gradient(to right, #ed1c24 150px, #3b3a3a);
+  text-align: left;
+}
+
+#blue-score {
+  background: linear-gradient(to right, #3b3a3a, #0066b3 250px);
+  text-align: right;
+}
+
+.blue-score-enter {
+  right: 10px;
+}
+
+.blue-score-exit {
+  right: -500px;
+}
+
+.red-score-enter {
+  left: 10px;
+}
+
+.red-score-exit {
+  left: -500px;
+}
+
+.display-penalty {
+  position: absolute;
+  transform: translateY(calc(50vh - 50% + 130px));
+
+  color: yellow;
+  font-size: 40px;
+}
+
+#red-penalties {
+  left: 15px;
+}
+
+#blue-penalties {
+  right: 15px;
+}
+
+.circle-red {
+  stroke: rgb(205, 11, 11);
+}
+
+.circle-orange {
+  stroke: orange;
+}
+
+.circle-green {
+  stroke: #56ea16;
+}
+
+.reveal {
+  height: 100%;
+  width: 50%;
+  position: absolute;
+  top: 0px;
+  margin: 0;
+  transition: 3s ease;
+}
+
+#red-reveal {
+  background-color: #ed1c24;
+}
+
+#blue-reveal {
+  background-color: #0066b3;
+}
+
+.blue-reveal-enter {
+  right: 0%;
+}
+
+.blue-reveal-exit {
+  right: -100%;
+}
+
+.red-reveal-enter {
+  left: 0%;
+}
+
+.red-reveal-exit {
+  left: -100%;
+}
+
+.points {
+  color: white;
+  font-size: 200px;
+}
+
+.penalties {
+  color: yellow;
+  font-size: 100px;
+}
+
+.reveal-score :first-child {
+  color: white;
+  font-size: 75px;
+}
+
+.reveal-score {
+  position: relative;
+  top: 150px;
+  max-width: 100%;
+  text-wrap: wrap;
+  justify-content: center;
+  align-content: center;
+  text-align: center;
+}
+
+.reveal-score div {
+  margin: 10px;
+}
+
+#winner {
+  position: absolute;
+  height: 150px;
+  line-height: 150px;
+  font-size: 150px;
+  width: 100%;
+  background-color: rgb(226, 226, 42);
+  color: black;
+  text-align: center;
+  text-shadow: 0px 0px 200px white;
+  border-radius: 0px 0px 8px 8px;
+}
+
+#tied {
+  position: absolute;
+  height: 150px;
+  line-height: 150px;
+  font-size: 150px;
+  width: 200%;
+  background-color: rgb(135, 135, 131);
+  color: black;
+  text-align: center;
+  text-shadow: 0px 0px 200px white;
+  border-radius: 0px 0px 8px 8px;
+  animation: 4s fadeIn;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0%;
+  }
+  75% {
+    opacity: 0%;
+  }
+  100% {
+    opacity: 100%;
+  }
+}
