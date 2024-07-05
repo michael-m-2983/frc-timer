@@ -6,6 +6,14 @@ const redReveal = document.getElementById("red-reveal");
 const blueReveal = document.getElementById("blue-reveal");
 const fileInput = document.getElementById("file-input");
 
+const start = new Audio("./sounds/start.mp3");
+const end = new Audio("./sounds/endbuzzer.mp3");
+const endgame = new Audio("./sounds/whistle.mp3");
+
+start.preload = 'auto';
+end.preload = 'auto';
+endgame.preload = 'auto';
+
 // Button keymap
 KEYMAP = [
   ["s", 0, 1],
@@ -108,14 +116,14 @@ function updateDisplayTime() {
 }
 
 function startTimer() {
-  timeDisplay.setAttributeNS(null, "fill", "white");
   if (timePassed == 0) {
-    new Audio("sounds/start.mp3").play();
+    start.play();
   }
+
+  timeDisplay.setAttributeNS(null, "fill", "white");
 
   if (timePassed != initialTime) {
     if (timerInterval == null) {
-      timePassed += 1;
       timeDisplay.innerHTML = formatDisplayTime(initialTime - timePassed);
       changeCirclePercent();
 
@@ -131,9 +139,9 @@ function startTimer() {
         changeCirclePercent();
 
         if (initialTime - timePassed == 30) {
-          new Audio("sounds/whistle.mp3").play();
+          endgame.play();
         } else if (initialTime - timePassed == 0) {
-          new Audio("sounds/endbuzzer.mp3").play();
+          end.play();
         }
 
         if (initialTime - timePassed <= 10) {
