@@ -10,9 +10,9 @@ Use the buttons below the timer circle to start/stop the timer, reset the timer,
 
 ---
 
-Matches must be done in JSON formatting, which [matches.json](./matches.json) (which is a [FRC double elimination bracket](https://www.chiefdelphi.com/uploads/default/original/3X/3/e/3e12925af959d0bb1ff88d7756bc47153a7198cf.png) of 8) has an example for. Use the upload button to load your match files, formatted as in the example.
+Matches must be done in JSON formatting, which [matches.json](./matches.json) has an example for. Use the upload button to load your match files, formatted as in the example. The Alliance names may be swapped out for whatever title a team would like to use.
 
-You may choose whether to play a bracket like style, or just running matches by setting the 'bracket' key in your .json file to true or false. [bracket.json](./bracket.json) contains an example of how this is set up. If 'bracket' is set to true, the team names will be read from the first set of matches, and logic is carried out to find the correct team to substitute until the bracket has finished. The winner of each match will only be updated when the "final scores" are revealed after a match has concluded and the user presses the 'r' key.
+You may choose whether to play a bracket like style, or just running matches by setting the 'bracket' key in your .json file to true or false. [bracket.json](./bracket.json) (which is a [FRC double elimination bracket](https://www.chiefdelphi.com/uploads/default/original/3X/3/e/3e12925af959d0bb1ff88d7756bc47153a7198cf.png) of 8) contains an example of how this is set up. If 'bracket' is set to true, the team names will be read from the first set of matches, and logic is carried out to find the correct team to substitute until the bracket has finished. The winner of each match will only be updated when the "final scores" are revealed after a match has concluded and the user presses the 'r' key.
 
 ```json
 {
