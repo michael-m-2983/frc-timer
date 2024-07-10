@@ -33,13 +33,13 @@ var matchNumber = 1;
 var points = [0, 0];
 var penalties = [0, 0];
 
-// load matches.json (the default example) if "use" is set to true
+// load matches.json (the default example) if "preload" is set to true
 window.onload = function () {
   fetch("./matches.json")
     .then((text) => text.text())
     .then((json) => JSON.parse(json))
     .then((json) => {
-      if (json.use == true) {
+      if (json.preload == true) {
         matchesJSON = json;
         loadMatch(matchNumber);
       }
@@ -272,13 +272,17 @@ function toggleScores() {
     // Winner logic
     if (points[0] - penalties[0] > points[1] - penalties[1]) {
       redReveal.insertBefore(winnerDiv, redReveal.firstChild);
+      matchesJSON["m" + matchNumber].winner = "red";
     } else if (points[0] - penalties[0] < points[1] - penalties[1]) {
       blueReveal.insertBefore(winnerDiv, blueReveal.firstChild);
+      matchesJSON["m" + matchNumber].winner = "blue";
     } else if (points[0] - penalties[0] == points[1] - penalties[1]) {
       if (penalties[0] < penalties[1]) {
         redReveal.insertBefore(winnerDiv, redReveal.firstChild);
+        matchesJSON["m" + matchNumber].winner = "red";
       } else if (penalties[0] > penalties[1]) {
         blueReveal.insertBefore(winnerDiv, blueReveal.firstChild);
+        matchesJSON["m" + matchNumber].winner = "blue";
       } else {
         winnerDiv.id = "tied";
         winnerDiv.innerHTML = "Tied!";
@@ -294,7 +298,7 @@ function toggleScores() {
 }
 
 function loadMatch(number) {
-    document
+  document
     .getElementById("match-selector")
     .classList.replace("no-matches", "matches");
 
@@ -303,12 +307,23 @@ function loadMatch(number) {
     1
   );
 
-  matchData = matchesJSON["m" + matchNumber];
-  redTitle.innerHTML = matchData.red;
-  blueTitle.innerHTML = matchData.blue;
+  if(matchesJSON.bracket == false) {
+    matchData = matchesJSON["m" + matchNumber];
+    redTitle.innerHTML = matchData.red;
+    blueTitle.innerHTML = matchData.blue;
 
-  document.getElementById("red-reveal-name").innerHTML = matchData.red;
-  document.getElementById("blue-reveal-name").innerHTML = matchData.blue;
+    document.getElementById("red-reveal-name").innerHTML = matchData.red;
+    document.getElementById("blue-reveal-name").innerHTML = matchData.blue;
+  } else {
+    red = findTeamName(matchesJSON["m" + matchNumber].red);
+    blue = findTeamName(matchesJSON["m" + matchNumber].blue);
+
+    redTitle.innerHTML = red;
+    blueTitle.innerHTML = blue;
+
+    document.getElementById("red-reveal-name").innerHTML = red;
+    document.getElementById("blue-reveal-name").innerHTML = blue;
+  }
 
   document.getElementById("match").innerHTML = "Match " + matchNumber;
 
@@ -319,5 +334,15 @@ function loadMatch(number) {
       toggleTeams(true);
     }, 2000);
   }
+}
 
+function findTeamName(info) {
+  if(info.match(/(Winner|Loser) of m\d+/g)) {
+    match = matchesJSON[info.match(/m\d+/)];
+    // Find team based on what the info says, if winner then use the
+    // .winner property, else get the opposite team
+    return findTeamName(match[info.includes("Winner") ? match.winner : (match.winner == "red" ? "blue" : "red")]);
+  } else {
+    return info;
+  }
 }
