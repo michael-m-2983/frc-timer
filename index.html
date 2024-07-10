@@ -13,9 +13,9 @@
     <div id="blue-score" class="scores blue-score-enter"></div>
     <div id="blue-penalties" class="display-penalty">0</div>
     <div id="match-selector" class="button-row no-matches">
-      <button style="background-image: url(./svg/left.svg);" onclick="loadMatch(--matchNumber)"></button>
+      <button style="background-image: url(./svg/left.svg);" onclick="if (timePassed == 0) loadMatch(--matchNumber)"></button>
       <span id="match">Match 1</span>
-      <button style="background-image: url(./svg/right.svg);" onclick="loadMatch(++matchNumber)"></button>
+      <button style="background-image: url(./svg/right.svg);" onclick=" if(timePassed == 0) loadMatch(++matchNumber)"></button>
     </div>
     <div
       id="timer-div"

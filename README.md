@@ -10,13 +10,13 @@ Use the buttons below the timer circle to start/stop the timer, reset the timer,
 
 ---
 
-Matches must be done in JSON formatting, which [matches.json](./matches.json) has an example for. Use the upload button to load your match files, formatted as in the example.
+Matches must be done in JSON formatting, which [matches.json](./matches.json) (which is a FRC double elimation bracket of 8) has an example for. Use the upload button to load your match files, formatted as in the example.
 
 ```json
 {
     "m1" : {
         "red": "Alliance 1",
-        "blue": "Alliance 2"
+        "blue": "Alliance 8"
     },
     ...
 }
@@ -24,6 +24,8 @@ Matches must be done in JSON formatting, which [matches.json](./matches.json) ha
 The names provided in each match will be the names displayed for each alliance color in the current score, and also in the final score reveal.
 
 Resetting the timer after a match has finished (with matches data uploaded) will result in the next match being brought up. This process will continue until there are no matches left, in which case no more matches will be played.
+
+When matches are loaded, a new selector will appear at the top that allows one cycle through the matches by using the arrow keys
 
 ---
 

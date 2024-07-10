@@ -33,7 +33,7 @@ var matchNumber = 1;
 var points = [0, 0];
 var penalties = [0, 0];
 
-// load matches if "use" is set to true
+// load matches.json (the default example) if "use" is set to true
 window.onload = function () {
   fetch("./matches.json")
     .then((text) => text.text())
@@ -294,7 +294,7 @@ function toggleScores() {
 }
 
 function loadMatch(number) {
-  document
+    document
     .getElementById("match-selector")
     .classList.replace("no-matches", "matches");
 
@@ -319,4 +319,5 @@ function loadMatch(number) {
       toggleTeams(true);
     }, 2000);
   }
+
 }
