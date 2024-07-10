@@ -46,10 +46,29 @@ span {
   user-select: none;
 }
 
-.timer-buttons button {
+.no-matches {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.matches {
+  opacity: 100;
+  pointer-events: auto;
+}
+
+.button-row {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-content: center;
+  transition: ease 2s;
+}
+
+.button-row button {
   width: 50px;
   height: 50px;
-  margin: 3px;
+  margin: 0px 5px 0px 5px;
+  padding: 0px;
   background-color: #3b3a3a;
   background-repeat: no-repeat;
   background-size: 100%;
@@ -58,7 +77,14 @@ span {
   border-radius: 15px;
 }
 
-.timer-buttons button:hover {
+.button-row span {
+  color: white;
+  font-size: 35px;
+  display: inline-flex;
+  align-items: center;
+}
+
+.button-row button:hover {
   scale: 1.1;
   background-color: #4e4e4e;
 }
@@ -199,10 +225,6 @@ span {
   justify-content: center;
   align-content: center;
   text-align: center;
-}
-
-.reveal-score div {
-  margin: 10px;
 }
 
 #winner {

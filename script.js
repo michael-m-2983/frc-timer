@@ -10,9 +10,9 @@ const start = new Audio("./sounds/start.mp3");
 const end = new Audio("./sounds/endbuzzer.mp3");
 const endgame = new Audio("./sounds/whistle.mp3");
 
-start.preload = 'auto';
-end.preload = 'auto';
-endgame.preload = 'auto';
+start.preload = "auto";
+end.preload = "auto";
+endgame.preload = "auto";
 
 // Button keymap
 KEYMAP = [
@@ -58,7 +58,6 @@ fileInput.onchange = function () {
     } catch (error) {
       alert("Unable to parse file!");
     }
-    
   };
 };
 
@@ -175,12 +174,8 @@ function changeCirclePercent() {
 function resetTimer() {
   stopTimer();
 
-  // if no loaded matches, timer is finished, and there are more matches to run
-  if (
-    matchesJSON != null &&
-    timePassed == initialTime &&
-    Object.keys(matchesJSON).join().match(/m/g).length > matchNumber
-  ) {
+  // if no loaded matches and timer is finished
+  if (matchesJSON != null && timePassed == initialTime) {
     loadMatch(++matchNumber);
   }
 
@@ -298,7 +293,16 @@ function toggleScores() {
   }
 }
 
-function loadMatch(matchNumber) {
+function loadMatch(number) {
+  document
+    .getElementById("match-selector")
+    .classList.replace("no-matches", "matches");
+
+  matchNumber = Math.max(
+    Math.min(Object.keys(matchesJSON).join().match(/m/g).length, number),
+    1
+  );
+
   matchData = matchesJSON["m" + matchNumber];
   redTitle.innerHTML = matchData.red;
   blueTitle.innerHTML = matchData.blue;
@@ -306,9 +310,13 @@ function loadMatch(matchNumber) {
   document.getElementById("red-reveal-name").innerHTML = matchData.red;
   document.getElementById("blue-reveal-name").innerHTML = matchData.blue;
 
-  toggleTeams();
+  document.getElementById("match").innerHTML = "Match " + matchNumber;
 
-  setTimeout(function () {
-    toggleTeams(true);
-  }, 2000);
+  if (number == matchNumber) {
+    toggleTeams(false);
+
+    setTimeout(function () {
+      toggleTeams(true);
+    }, 2000);
+  }
 }
