@@ -337,7 +337,7 @@ function loadMatch(number) {
 }
 
 function findTeamName(info) {
-  if(info.match(/(Winner|Loser) of m\d+/g)) {
+  if(info.toUpperCase().match(/(WINNER|LOSER) OF M\d+/g)) {
     match = matchesJSON[info.match(/m\d+/)];
     // Find team based on what the info says, if winner then use the
     // .winner property, else get the opposite team
