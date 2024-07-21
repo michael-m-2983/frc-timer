@@ -7,12 +7,39 @@ const blueReveal = document.getElementById("blue-reveal");
 const fileInput = document.getElementById("file-input");
 
 const start = new Audio("./sounds/start.mp3");
+const teleop = new Audio("./sounds/teleop.mp3");
 const end = new Audio("./sounds/endbuzzer.mp3");
 const endgame = new Audio("./sounds/whistle.mp3");
 
 start.preload = "auto";
 end.preload = "auto";
 endgame.preload = "auto";
+teleop.preload = "auto";
+
+// seconds for timer
+var initialTime = 135;
+
+/**
+ * Times for the "teleop" and "endgame" sounds to play,
+ * if they are null, the sound will not play
+ */
+const BUZZER_TIMES = {
+  TELEOP: 120,
+  ENDGAME: 30,
+};
+
+timeDisplay.innerHTML = formatDisplayTime(initialTime);
+
+var timePassed = 0;
+var timerInterval = null;
+
+var redTitle = document.createElement("span");
+redTitle.innerHTML = "Red";
+var blueTitle = document.createElement("span");
+blueTitle.innerHTML = "Blue";
+
+redDisplay.appendChild(redTitle);
+blueDisplay.appendChild(blueTitle);
 
 // Button keymap
 KEYMAP = [
@@ -81,23 +108,6 @@ document.addEventListener("keyup", (event) => {
   }
 });
 
-// seconds for timer
-var initialTime = 135;
-timeDisplay.innerHTML = formatDisplayTime(initialTime);
-
-var timePassed = 0;
-var timerInterval = null;
-
-var redTitle = document.createElement("span");
-redTitle.innerHTML = "Red";
-var blueTitle = document.createElement("span");
-blueTitle.innerHTML = "Blue";
-
-redDisplay.appendChild(redTitle);
-blueDisplay.appendChild(blueTitle);
-
-document.addEventListener("keyup", (event) => {});
-
 function formatDisplayTime(time) {
   var minutes = Math.floor(time / 60);
   var seconds = time % 60;
@@ -119,7 +129,7 @@ function startTimer() {
     start.play();
   }
 
-  timeDisplay.setAttributeNS(null, "fill", "white");
+  timeDisplay.classList = "timer-white";
 
   if (timePassed != initialTime) {
     if (timerInterval == null) {
@@ -137,7 +147,15 @@ function startTimer() {
 
         changeCirclePercent();
 
-        if (initialTime - timePassed == 30) {
+        if (
+          BUZZER_TIMES.TELEOP != null &&
+          initialTime - timePassed == BUZZER_TIMES.TELEOP
+        ) {
+          teleop.play();
+        } else if (
+          BUZZER_TIMES.ENDGAME != null &&
+          initialTime - timePassed == BUZZER_TIMES.ENDGAME
+        ) {
           endgame.play();
         } else if (initialTime - timePassed == 0) {
           end.play();
@@ -161,7 +179,9 @@ function stopTimer() {
   clearInterval(timerInterval);
   timerInterval = null;
   if (!timeDisplay.classList.contains("timer-end")) {
-    timeDisplay.setAttributeNS(null, "fill", "yellow");
+    timeDisplay.classList = "timer-yellow";
+  } else if(initialTime - timePassed <= 10 && timePassed != initialTime) {
+    timeDisplay.classList = "timer-yellow";
   }
 }
 
@@ -182,18 +202,20 @@ function resetTimer() {
   points = [0, 0];
   penalties = [0, 0];
 
-  setTimeout(() => {
-    updateScore(true, 0);
-    updateScore(false, 0);
+  setTimeout(
+    () => {
+      updateScore(true, 0);
+      updateScore(false, 0);
 
-    updatePenalties(false, 0);
-    updatePenalties(true, 0);
-  }, 3000);
+      updatePenalties(false, 0);
+      updatePenalties(true, 0);
+    },
+    matchesJSON != null ? 3000 : 0
+  );
 
   timePassed = 0;
   displayCircle.setAttributeNS(null, "stroke-dasharray", "629 628");
-  timeDisplay.classList.remove("timer-end");
-  timeDisplay.setAttributeNS(null, "fill", "white");
+  timeDisplay.classList = "timer-white";
   void timeDisplay.offsetWidth;
   displayCircle.classList = "circle-green";
   timeDisplay.innerHTML = formatDisplayTime(initialTime);
@@ -307,7 +329,7 @@ function loadMatch(number) {
     1
   );
 
-  if(matchesJSON.bracket == false) {
+  if (matchesJSON.bracket == false) {
     matchData = matchesJSON["m" + matchNumber];
     redTitle.innerHTML = matchData.red;
     blueTitle.innerHTML = matchData.blue;
@@ -337,11 +359,19 @@ function loadMatch(number) {
 }
 
 function findTeamName(info) {
-  if(info.toUpperCase().match(/(WINNER|LOSER) OF M\d+/g)) {
+  if (info.toUpperCase().match(/(WINNER|LOSER) OF M\d+/g)) {
     match = matchesJSON[info.match(/m\d+/)];
     // Find team based on what the info says, if winner then use the
     // .winner property, else get the opposite team
-    return findTeamName(match[info.includes("Winner") ? match.winner : (match.winner == "red" ? "blue" : "red")]);
+    return findTeamName(
+      match[
+        info.includes("Winner")
+          ? match.winner
+          : match.winner == "red"
+          ? "blue"
+          : "red"
+      ]
+    );
   } else {
     return info;
   }
