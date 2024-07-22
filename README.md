@@ -26,6 +26,8 @@ You may choose whether to play a bracket like style, or just running matches by 
 
 The names provided in each match will be the names displayed for each alliance color in the current score, and also in the final score reveal.
 
+The names in the 'icon' field will also serve to give alliances icons. Use this like a key value pair (The alliance name, and the path to their icon in the 'team-icons' folder). The example in matches.json gives Alliance 1 the kiwi.svg as their icon.
+
 Resetting the timer after a match has finished (with matches data uploaded) will result in the next match being brought up. This process will continue until there are no matches left, in which case no more matches will be played.
 
 When a match file is loaded, a new selector will appear at the top that allows one cycle through the matches by using the arrow keys.

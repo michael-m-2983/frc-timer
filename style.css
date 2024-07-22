@@ -127,6 +127,25 @@ span {
   margin: 5px;
 }
 
+.team-icon {
+  position: absolute;
+  transform: translateY(calc(50vh - 180px));
+  height: 60px;
+  width: auto;
+}
+
+.icon-toggle {
+  animation: fadeIn 2s;
+}
+
+#red-icon {
+  left: 10px;
+}
+
+#blue-icon {
+  right: 10px;
+}
+
 #red-score {
   background: linear-gradient(to right, #ed1c24 150px, #3b3a3a);
   text-align: left;

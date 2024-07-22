@@ -1,7 +1,9 @@
 const timeDisplay = document.getElementById("timer-display");
 const displayCircle = document.getElementById("timer-circle");
 const redDisplay = document.getElementById("red-score");
+const redIcon = document.getElementById("red-icon");
 const blueDisplay = document.getElementById("blue-score");
+const blueIcon = document.getElementById("blue-icon");
 const redReveal = document.getElementById("red-reveal");
 const blueReveal = document.getElementById("blue-reveal");
 const fileInput = document.getElementById("file-input");
@@ -180,7 +182,7 @@ function stopTimer() {
   timerInterval = null;
   if (!timeDisplay.classList.contains("timer-end")) {
     timeDisplay.classList = "timer-yellow";
-  } else if(initialTime - timePassed <= 10 && timePassed != initialTime) {
+  } else if (initialTime - timePassed <= 10 && timePassed != initialTime) {
     timeDisplay.classList = "timer-yellow";
   }
 }
@@ -241,7 +243,7 @@ function updatePenalties(isBlue, penalties) {
   }
 }
 
-function toggleTeams(resetScores) {
+function toggleTeams(resetScores, toggleIcons) {
   if (redDisplay.classList.contains("red-score-enter")) {
     blueDisplay.classList.remove("blue-score-enter");
     redDisplay.classList.remove("red-score-enter");
@@ -252,11 +254,34 @@ function toggleTeams(resetScores) {
     redDisplay.classList.remove("red-score-exit");
     blueDisplay.classList.add("blue-score-enter");
     redDisplay.classList.add("red-score-enter");
+
+    redIcon.classList.toggle("icon-toggle");
+    blueIcon.classList.toggle("icon-toggle");
+  }
+
+  if (toggleIcons) {
+    redIcon.classList.toggle("icon-toggle");
+    blueIcon.classList.toggle("icon-toggle");
+
+    void redIcon.offsetWidth;
+    void blueIcon.offsetWidth;
   }
 
   if (resetScores) {
     updateScore(true, 0);
     updateScore(false, 0);
+  }
+}
+
+function changeIcons() {
+  if(matchesJSON != null && matchesJSON.icons != null) {
+    red = matchesJSON.icons[matchesJSON["m" + matchNumber].red];
+    blue = matchesJSON.icons[matchesJSON["m" + matchNumber].blue];
+    redIcon.src = "./team-icons/" + (red == null ? "default-red.svg" : red);
+    blueIcon.src = "./team-icons/" + (blue == null ? "default-blue.svg" : blue);
+  } else {
+    redIcon.src = "./team-icons/default-red.svg";
+    blueIcon.src = "./team-icons/default-blue.svg";
   }
 }
 
@@ -291,25 +316,31 @@ function toggleScores() {
       blueReveal.removeChild(blueReveal.firstChild);
     }
 
+    winner = "";
+
     // Winner logic
     if (points[0] - penalties[0] > points[1] - penalties[1]) {
       redReveal.insertBefore(winnerDiv, redReveal.firstChild);
-      matchesJSON["m" + matchNumber].winner = "red";
+      winner = "red";
     } else if (points[0] - penalties[0] < points[1] - penalties[1]) {
       blueReveal.insertBefore(winnerDiv, blueReveal.firstChild);
-      matchesJSON["m" + matchNumber].winner = "blue";
+      winner = "blue";
     } else if (points[0] - penalties[0] == points[1] - penalties[1]) {
       if (penalties[0] < penalties[1]) {
         redReveal.insertBefore(winnerDiv, redReveal.firstChild);
-        matchesJSON["m" + matchNumber].winner = "red";
+        winner = "red";
       } else if (penalties[0] > penalties[1]) {
         blueReveal.insertBefore(winnerDiv, blueReveal.firstChild);
-        matchesJSON["m" + matchNumber].winner = "blue";
+        winner = "blue";
       } else {
         winnerDiv.id = "tied";
         winnerDiv.innerHTML = "Tied!";
         redReveal.insertBefore(winnerDiv, redReveal.firstChild);
       }
+    }
+
+    if(matchesJSON != null) {
+      matchesJSON["m" + matchNumber].winner = winner;
     }
 
     blueReveal.classList.remove("blue-reveal-exit");
@@ -350,10 +381,11 @@ function loadMatch(number) {
   document.getElementById("match").innerHTML = "Match " + matchNumber;
 
   if (number == matchNumber) {
-    toggleTeams(false);
+    toggleTeams(false, true);
+    changeIcons();
 
     setTimeout(function () {
-      toggleTeams(true);
+      toggleTeams(true, false);
     }, 2000);
   }
 }
