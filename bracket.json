@@ -1,6 +1,9 @@
 {
    "preload": false,
    "bracket": true,
+   "icons" : {
+      "Alliance 1": "kiwi.svg"
+   },
    "m1": {
       "red": "Alliance 1",
       "blue": "Alliance 8"
