@@ -1,0 +1,14 @@
+{
+  "name": "frc-timer",
+  "version": "1.0.0",
+  "description": "",
+  "main": "electron-main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "author": "NetLockJ",
+  "license": "UNLICENSED",
+  "devDependencies": {
+    "electron": "^31.2.1"
+  }
+}

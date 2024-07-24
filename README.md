@@ -48,3 +48,19 @@ The way that we have used the scoring feature is with [micro:bit](https://microb
 - 3/4 - Increment/Decrement Blue Score
 - 5/6 - Increment/Decrement Red Penalties
 - 7/8 - Increment/Decrement Blue Penalties
+
+---
+
+### Electron
+
+```bash
+# You only need to do this once in order to install the dependency packages
+npm install
+
+# Run this every time
+npm start
+```
+
+#### Quitting
+
+To get out of the electron window just press ALT-F4 or CTRL-W as you would with a normal web browser.
